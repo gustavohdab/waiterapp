@@ -7,7 +7,7 @@
 
 <br>
 
-<h2 align="center"> Web Preview </h2>
+<h2 align="center"> Preview </h2>
 
 <p align="center">
   <img alt="image preview" src=".github/preview.jpg" width="100%">
