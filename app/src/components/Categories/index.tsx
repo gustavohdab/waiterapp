@@ -1,0 +1,48 @@
+import { useState } from "react";
+import { FlatList } from "react-native";
+import { Category } from "../../types/Category";
+import { Text } from "../Text";
+import { CategoryContainer, Icon } from "./styles";
+
+interface CategoriesProps {
+  categories: Category[];
+  onSelectCategory: (categoryId: string) => void;
+}
+
+export function Categories({ categories, onSelectCategory }: CategoriesProps) {
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  function handleSelectedCategory(categoryId: string) {
+    onSelectCategory(categoryId);
+    setSelectedCategory(categoryId);
+    if (selectedCategory === categoryId) {
+      onSelectCategory("");
+      setSelectedCategory("");
+    }
+  }
+
+  return (
+    <FlatList
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      data={categories}
+      contentContainerStyle={{ paddingRight: 24 }}
+      keyExtractor={(category) => category._id}
+      renderItem={({ item: category }) => {
+        const isSelected = category._id === selectedCategory;
+        return (
+          <CategoryContainer
+            onPress={() => handleSelectedCategory(category._id)}
+          >
+            <Icon>
+              <Text opacity={isSelected ? 1 : 0.5}>{category.icon}</Text>
+            </Icon>
+            <Text size={14} weight="600" opacity={isSelected ? 1 : 0.5}>
+              {category.name}
+            </Text>
+          </CategoryContainer>
+        );
+      }}
+    />
+  );
+}
